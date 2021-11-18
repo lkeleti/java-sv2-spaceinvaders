@@ -3,15 +3,17 @@ package spaceinvaders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static spaceinvaders.GameDatas.TILE_SIZE;
-
 public class Enemies {
     private int minX = 65536;
     private int maxX = 0;
     private int direction = 1;
     private int velocityX = 5;
+    private int tileSize;
+    private List<Spirit> enemyList = new ArrayList<>();
 
-    List<Spirit> enemyList = new ArrayList<>();
+    public Enemies(int tileSize) {
+        this.tileSize = tileSize;
+    }
 
     public List<Spirit> getEnemyList() {
         return enemyList;
@@ -32,8 +34,8 @@ public class Enemies {
             if (enemy.getPosX() < minX) {
                 minX = enemy.getPosX();
             }
-            if (enemy.getPosX() + TILE_SIZE > maxX) {
-                maxX = enemy.getPosX() + TILE_SIZE ;
+            if (enemy.getPosX() + tileSize > maxX) {
+                maxX = enemy.getPosX() + tileSize ;
             }
         }
     }

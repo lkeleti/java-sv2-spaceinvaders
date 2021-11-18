@@ -7,11 +7,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static spaceinvaders.GameDatas.*;
-
 public class GamePanel extends JPanel implements ActionListener {
     static final int PANEL_WIDTH = 1024;
     static final int PANEL_HEIGHT = 768;
+    static final int TILE_SIZE = 50;
     boolean leftDown = false;
     boolean rightDown = false;
     boolean spaceDown = false;
@@ -26,13 +25,13 @@ public class GamePanel extends JPanel implements ActionListener {
     GamePanel(){
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.BLACK);
-        enemies = new Enemies();
-        player = new Spirit(PANEL_WIDTH/2,PANEL_HEIGHT-TILE_SIZE,0);
+        enemies = new Enemies(TILE_SIZE);
+        player = new Spirit(PANEL_WIDTH/2,PANEL_HEIGHT-TILE_SIZE,0, TILE_SIZE);
         bullets = new Bullets();
 
         for (int i = 0; i < PANEL_WIDTH-150; i += 70) {
             for (int j = 0; j < 8; j++) {
-                enemies.addEnemy(new Spirit(i, j*70, j+1));
+                enemies.addEnemy(new Spirit(i, j*70, j+1,TILE_SIZE));
             }
         }
 
@@ -74,7 +73,7 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         enemies.changePosX(PANEL_WIDTH);
-        if (enemies.getEnemyList().isEmpty()) {
+        if (!enemies.getEnemyList().isEmpty()) {
             if (leftDown) {
                 if (player.getPosX() - 5 > 0) {
                     player.setPosX(player.getPosX() - 5);
